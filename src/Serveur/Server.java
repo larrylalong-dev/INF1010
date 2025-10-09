@@ -1,0 +1,53 @@
+package Serveur;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import Dao.UtilisateurDAO;
+
+public class Server {
+
+    private static String[] names = { "Wily", "Felix", "Carlsbad", "Bobob" };
+    private static String[] adj = { "the gentle", "the un-gentle", "the overwrought", "the urbane" };
+    private static final int PORT = 9090;
+
+    private static ArrayList<GestionnaireClient> clients = new ArrayList<>();
+    private static ExecutorService pool = Executors.newCachedThreadPool(); /// 1-le système supporte plusieurs clients
+                                                                           /// qui accèdent en même temps au serveur.
+    UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+    ServerSocket listener;
+    static PrintWriter envoyeur;
+
+    // Point d’entrée du serveur : accepte les connexions et démarre un thread par
+    // client
+
+    public static void main(String[] args) throws IOException {
+        ServerSocket listener = new ServerSocket(PORT);
+
+        while (true) {
+            System.out.println("[SERVER] attend connection cliente ...");
+            Socket client = listener.accept();
+
+            System.out.println("[SERVER] Connected to client!");
+            // envoyeur.println("END_MENU");
+            GestionnaireClient clientThread = new GestionnaireClient(client); // 2- Creation de thread pour chak client
+            clients.add(clientThread);
+            // envoyeur = new PrintWriter(client.getOutputStream(), true);
+            // envoyeur.println(menu());
+            /// les clients ne recoiv pas le menuu
+
+            pool.execute(clientThread);// Lance le thread pour ce client
+
+        }
+        
+    }
+
+
+}
