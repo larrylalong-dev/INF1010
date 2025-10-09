@@ -14,8 +14,7 @@ import Dao.UtilisateurDAO;
 
 public class Server {
 
-    private static String[] names = { "Wily", "Felix", "Carlsbad", "Bobob" };
-    private static String[] adj = { "the gentle", "the un-gentle", "the overwrought", "the urbane" };
+
     private static final int PORT = 9090;
 
     private static ArrayList<GestionnaireClient> clients = new ArrayList<>();
