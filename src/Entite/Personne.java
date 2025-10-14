@@ -1,25 +1,57 @@
 package Entite;
+
 public class Personne {
-    
+    private int id;
     private String nom;
     private String prenom;
     private String matricule;
     private String telephone;
+    private String adresseCourriel; 
     private String domaineActivite;
     private String motDePasse;
-    private Enum categorie; 
+    private String categorie; // je remplacerai peut etre par ENUM ON verra bien
     private boolean listeRouge;
 
-    public Personne(String nom, String prenom, String matricule, String telephone,
-                       String domaineActivite, String motDePasse, Enum categorie, boolean listeRouge) {
+
+    //  Constructeur vide (OBLIGATOIRE pour le DAO)
+    public Personne() {
+    }
+    public Personne(int id, String nom, String prenom, String matricule, String telephone,String adresseCourriel,
+            String domaineActivite, String motDePasse, String categorie, boolean listeRouge) {
+
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.matricule = matricule;
         this.telephone = telephone;
+        this.adresseCourriel = adresseCourriel;
         this.domaineActivite = domaineActivite;
         this.motDePasse = motDePasse;
         this.categorie = categorie;
         this.listeRouge = listeRouge;
+    }
+
+       // Constructeur sans ID (pour les insertions)
+    public Personne(String nom, String prenom, String matricule, String telephone,
+                    String adresseCourriel, String domaineActivite, String motDePasse, 
+                    String categorie, boolean listeRouge) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.matricule = matricule;
+        this.telephone = telephone;
+        this.adresseCourriel = adresseCourriel;
+        this.domaineActivite = domaineActivite;
+        this.motDePasse = motDePasse;
+        this.categorie = categorie;
+        this.listeRouge = listeRouge;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     // Getters et Setters
@@ -55,6 +87,11 @@ public class Personne {
         this.telephone = telephone;
     }
 
+     public void setAdresseCourriel(String AdresseCourriel) {
+        this.adresseCourriel = AdresseCourriel;
+    }
+
+
     public String getDomaineActivite() {
         return domaineActivite;
     }
@@ -71,11 +108,11 @@ public class Personne {
         this.motDePasse = motDePasse;
     }
 
-    public Enum getCategorie() {
+    public String getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(Enum categorie) {
+    public void setCategorie(String categorie) {
         this.categorie = categorie;
     }
 
@@ -87,4 +124,19 @@ public class Personne {
         this.listeRouge = listeRouge;
     }
 
+
+      @Override
+    public String toString() {
+        return "Personne{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", matricule='" + matricule + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", adresseCourriel='" + adresseCourriel + '\'' +
+                ", domaineActivite='" + domaineActivite + '\'' +
+                ", categorie='" + categorie + '\'' +
+                ", listeRouge=" + listeRouge +
+                '}';
+    }
 }

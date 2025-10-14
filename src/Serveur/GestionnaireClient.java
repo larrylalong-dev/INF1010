@@ -41,8 +41,9 @@ public class GestionnaireClient implements Runnable {
                     continue;
                 }
 
+                // LES OUT AUSSI NORMALEMENT C ES
                 switch (choix) {
-                    case 1:
+      case 1: //PAR EXMPLE KE LE CLIENT FAIT 1 le out.println cause aek ->server aek->basedd->serveur->client
                         System.out.println("Haloo");
                         out.println("Appel à retourneMembreParCategorie()");
                         break;

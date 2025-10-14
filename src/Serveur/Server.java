@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import Dao.UtilisateurDAO;
+import Dao.PersonneDAO;
 
 public class Server {
 
@@ -20,7 +20,7 @@ public class Server {
     private static ArrayList<GestionnaireClient> clients = new ArrayList<>();
     private static ExecutorService pool = Executors.newCachedThreadPool(); /// 1-le système supporte plusieurs clients
                                                                            /// qui accèdent en même temps au serveur.
-    UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+    //PersonneDAO utilisateurDAO = new PersonneDAO();
     ServerSocket listener;
     static PrintWriter envoyeur;
 
@@ -29,12 +29,13 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         ServerSocket listener = new ServerSocket(PORT);
+        int compteClient = 0;
 
         while (true) {
-            System.out.println("[SERVER] attend connection cliente ...");
+            System.out.println("[SERVER] attend une nouvelle connection cliente ...");
             Socket client = listener.accept();
 
-            System.out.println("[SERVER] Connected to client!");
+            System.out.println("[SERVER] Connecté a " + compteClient++ +"client!");
             // envoyeur.println("END_MENU");
             GestionnaireClient clientThread = new GestionnaireClient(client); // 2- Creation de thread pour chak client
             clients.add(clientThread);
