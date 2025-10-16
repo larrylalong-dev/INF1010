@@ -16,7 +16,7 @@ public class Server {
 
 
     private static final int PORT = 9090;
-
+// on doit faire de tel ensorte ke le port si est occupe sur un autre pc on puisse l< incrementer pour le changer 
     private static ArrayList<GestionnaireClient> clients = new ArrayList<>();
     private static ExecutorService pool = Executors.newCachedThreadPool(); /// 1-le système supporte plusieurs clients
                                                                            /// qui accèdent en même temps au serveur.

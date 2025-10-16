@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import Database.DatabaseConnection;
 import Entite.Personne;
 
 public class PersonneDAOImpl implements PersonneDAO {
+
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
 
     @Override
     public Personne get(int id) throws SQLException {
@@ -36,37 +40,182 @@ public class PersonneDAOImpl implements PersonneDAO {
             personne.setListeRouge(rs.getBoolean("liste_rouge"));
         }
 
+        DatabaseConnection.closePreparedStatement(preparedStatement);
+        DatabaseConnection.closeConnection(connection);
         return personne;
     }
 
     @Override
     public List<Personne> getAll() throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
-    }
 
-    @Override
-    public int save(Personne personne) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        ResultSet rs = null;
+
+        List<Personne> personnes = new ArrayList<>();
+
+        connection = DatabaseConnection.getConnection();
+        String sqlScript = "SELECT * FROM personne ORDER BY id";
+        preparedStatement = connection.prepareStatement(sqlScript);
+        rs = preparedStatement.executeQuery();
+
+        while (rs.next()) {
+            Personne personne = new Personne();
+            personne.setId(rs.getInt("id"));
+            personne.setNom(rs.getString("nom"));
+            personne.setPrenom(rs.getString("prenom"));
+            personne.setMatricule(rs.getString("matricule"));
+            personne.setTelephone(rs.getString("telephone"));
+            personne.setAdresseCourriel(rs.getString("adresse_courriel"));
+            personne.setDomaineActivite(rs.getString("domaine_activite"));
+            personne.setMotDePasse(rs.getString("mot_de_passe"));
+            personne.setCategorie(rs.getString("categorie"));
+            personne.setListeRouge(rs.getBoolean("liste_rouge"));
+
+            personnes.add(personne);
+            System.out.println(personne);
+        }
+
+        System.out.println(" " + personnes.size() + " personne(s) récupérée(s)");
+
+        DatabaseConnection.closePreparedStatement(preparedStatement);
+        DatabaseConnection.closeConnection(connection);
+
+        return personnes;
     }
 
     @Override
     public int insert(Personne personne) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+
+        int rowsAffected = 0;
+
+        connection = DatabaseConnection.getConnection();
+
+        String sqlScript = "INSERT INTO personne (nom, prenom, matricule, telephone, " +
+                "adresse_courriel, domaine_activite, mot_de_passe, categorie, liste_rouge) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        preparedStatement = connection.prepareStatement(sqlScript);
+        preparedStatement.setString(1, personne.getNom());
+        preparedStatement.setString(2, personne.getPrenom());
+        preparedStatement.setString(3, personne.getMatricule());
+        preparedStatement.setString(4, personne.getTelephone());
+        preparedStatement.setString(5, personne.getAdresseCourriel());
+        preparedStatement.setString(6, personne.getDomaineActivite());
+        preparedStatement.setString(7, personne.getMotDePasse());
+        preparedStatement.setString(8, personne.getCategorie());
+        preparedStatement.setBoolean(9, personne.isListeRouge());
+
+        rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            System.out.println(" Personne insérée avec succès");
+        }
+
+        DatabaseConnection.closePreparedStatement(preparedStatement);
+        DatabaseConnection.closeConnection(connection);
+
+        return rowsAffected;
     }
 
     @Override
     public int update(Personne personne) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+
+        int rowsAffected = 0;
+
+        connection = DatabaseConnection.getConnection();
+
+        String sqlScript = "UPDATE personne SET nom=?, prenom=?, matricule=?, telephone=?, " +
+                "adresse_courriel=?, domaine_activite=?, mot_de_passe=?, " +
+                "categorie=?, liste_rouge=? WHERE id=?";
+
+        preparedStatement = connection.prepareStatement(sqlScript);
+        preparedStatement.setString(1, personne.getNom());
+        preparedStatement.setString(2, personne.getPrenom());
+        preparedStatement.setString(3, personne.getMatricule());
+        preparedStatement.setString(4, personne.getTelephone());
+        preparedStatement.setString(5, personne.getAdresseCourriel());
+        preparedStatement.setString(6, personne.getDomaineActivite());
+        preparedStatement.setString(7, personne.getMotDePasse());
+        preparedStatement.setString(8, personne.getCategorie());
+        preparedStatement.setBoolean(9, personne.isListeRouge());
+        preparedStatement.setInt(10, personne.getId());
+
+        rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            System.out.println(" Personne mise à jour avec succès");
+        } else {
+            System.out.println(" Aucune personne trouvée avec l'ID : " + personne.getId());
+        }
+
+        DatabaseConnection.closePreparedStatement(preparedStatement);
+        DatabaseConnection.closeConnection(connection);
+
+        return rowsAffected;
     }
 
     @Override
-    public int delete(Personne personne) {
+    public int delete(Personne personne) throws SQLException {
+
+        connection = DatabaseConnection.getConnection();
+
+        String sqlScript = "DELETE FROM personne WHERE id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sqlScript);
+
+        preparedStatement.setInt(1, personne.getId());
+        int resultat = preparedStatement.executeUpdate();
+
+        DatabaseConnection.closePreparedStatement(preparedStatement);
+        DatabaseConnection.closeConnection(connection);
+
+        return resultat;
+    }
+
+    @Override
+    public List<Personne> getMembresParCategorie(String categorie) throws SQLException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        throw new UnsupportedOperationException("Unimplemented method 'getMembresParCategorie'");
+    }
+
+    @Override
+    public List<Personne> getProfesseursParDomaine(String domaine) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getProfesseursParDomaine'");
+    }
+
+    @Override
+    public Personne getMembre(String identifiant) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMembre'");
+    }
+
+    @Override
+    public void ajouterMembre(Personne membre) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'ajouterMembre'");
+    }
+
+    @Override
+    public void modifierMembre(Personne membre) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'modifierMembre'");
+    }
+
+    @Override
+    public void supprimerMembre(String identifiant) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'supprimerMembre'");
+    }
+
+    @Override
+    public void mettreSurListeRouge(String identifiant) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mettreSurListeRouge'");
+    }
+
+    @Override
+    public void retirerDeListeRouge(String identifiant) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'retirerDeListeRouge'");
     }
 
 }

@@ -56,7 +56,7 @@ public class Personne {
 
     // Getters et Setters
     public String getNom() {
-        return nom;
+        return this.nom;
     }
 
     public void setNom(String nom) {
@@ -64,7 +64,7 @@ public class Personne {
     }
 
     public String getPrenom() {
-        return prenom;
+        return this.prenom;
     }
 
     public void setPrenom(String prenom) {
@@ -72,7 +72,7 @@ public class Personne {
     }
 
     public String getMatricule() {
-        return matricule;
+        return this.matricule;
     }
 
     public void setMatricule(String matricule) {
@@ -80,20 +80,23 @@ public class Personne {
     }
 
     public String getTelephone() {
-        return telephone;
+        return this.telephone;
     }
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
     }
 
+     public String getAdresseCourriel() {
+       return this.adresseCourriel;
+    }
      public void setAdresseCourriel(String AdresseCourriel) {
         this.adresseCourriel = AdresseCourriel;
     }
 
 
     public String getDomaineActivite() {
-        return domaineActivite;
+        return this.domaineActivite;
     }
 
     public void setDomaineActivite(String domaineActivite) {
@@ -101,7 +104,7 @@ public class Personne {
     }
 
     public String getMotDePasse() {
-        return motDePasse;
+        return this.motDePasse;
     }
 
     public void setMotDePasse(String motDePasse) {
@@ -109,7 +112,7 @@ public class Personne {
     }
 
     public String getCategorie() {
-        return categorie;
+        return this.categorie;
     }
 
     public void setCategorie(String categorie) {
@@ -117,7 +120,7 @@ public class Personne {
     }
 
     public boolean isListeRouge() {
-        return listeRouge;
+        return this.listeRouge;
     }
 
     public void setListeRouge(boolean listeRouge) {
@@ -128,15 +131,15 @@ public class Personne {
       @Override
     public String toString() {
         return "Personne{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", matricule='" + matricule + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", adresseCourriel='" + adresseCourriel + '\'' +
-                ", domaineActivite='" + domaineActivite + '\'' +
-                ", categorie='" + categorie + '\'' +
-                ", listeRouge=" + listeRouge +
+                "id=" + this.id +
+                ", nom='" + this.nom + '\'' +
+                ", prenom='" + this.prenom + '\'' +
+                ", matricule='" + this.matricule + '\'' +
+                ", telephone='" + this.telephone + '\'' +
+                ", adresseCourriel='" + this.adresseCourriel + '\'' +
+                ", domaineActivite='" + this.domaineActivite + '\'' +
+                ", categorie='" + this.categorie + '\'' +
+                ", listeRouge=" + this.listeRouge +
                 '}';
     }
 }

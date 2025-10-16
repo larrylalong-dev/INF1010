@@ -37,10 +37,45 @@ public class DatabaseConnection {
         }
     }
     
-    /**
-     * Méthode principale pour tester la connexion
-     */
-    /*public static void main(String[] args) {
+
+     /** Ferme la connexion */
+    public static void closeConnection(Connection con) {
+        if (con != null) {
+            try {
+                con.close();
+                System.out.println(" Connexion fermée.");
+            } catch (SQLException e) {
+                System.err.println("Erreur lors de la fermeture de la connexion : " + e.getMessage());
+            }
+        }
+    }
+
+    /**  Ferme le PreparedStatement */
+    public static void closePreparedStatement(PreparedStatement ps) {
+        if (ps != null) {
+            try {
+                ps.close();
+                System.out.println(" PreparedStatement fermé.");
+            } catch (SQLException e) {
+                System.err.println(" Erreur lors de la fermeture du PreparedStatement : " + e.getMessage());
+            }
+        }
+    }
+
+    /**  Ferme le ResultSet */
+    public static void closeResultSet(ResultSet rs) {
+        if (rs != null) {
+            try {
+                rs.close();
+                System.out.println(" ResultSet fermé.");
+            } catch (SQLException e) {
+                System.err.println(" Erreur lors de la fermeture du ResultSet : " + e.getMessage());
+            }
+        }
+    }
+
+    
+    public static void main(String[] args) {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -98,7 +133,7 @@ public class DatabaseConnection {
                 System.err.println(" Erreur lors de la fermeture : " + e.getMessage());
             }
         }
-    } */
+    } 
     
     /**
      * Teste si la connexion fonctionne

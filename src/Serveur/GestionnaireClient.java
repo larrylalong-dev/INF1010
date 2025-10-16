@@ -5,19 +5,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
+
+import Dao.PersonneDAO;
+import Dao.PersonneDAOImpl;
+import Entite.Personne;
 
 public class GestionnaireClient implements Runnable {
     private Socket client;
     private BufferedReader in;
     private PrintWriter out;
+    private PersonneDAO personneDAO;
 
-        // Initialise les flux d'entrée et sortie pour un client connecté
+    // Initialise les flux d'entrée et sortie pour un client connecté et //
+    // Instanciation du DAO
     public GestionnaireClient(Socket clientSocket) throws IOException {
         this.client = clientSocket;
         in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         out = new PrintWriter(client.getOutputStream(), true);
-
+        this.personneDAO = new PersonneDAOImpl();
     }
 
     // Gère les interactions entre le serveur et un client : menu, choix, réponses
@@ -41,40 +49,10 @@ public class GestionnaireClient implements Runnable {
                     continue;
                 }
 
-                // LES OUT AUSSI NORMALEMENT C ES
-                switch (choix) {
-      case 1: //PAR EXMPLE KE LE CLIENT FAIT 1 le out.println cause aek ->server aek->basedd->serveur->client
-                        System.out.println("Haloo");
-                        out.println("Appel à retourneMembreParCategorie()");
-                        break;
-                    case 2:
-                        out.println("Appel à retourneProfesseurParDomaine()");
-                        break;
-                    case 3:
-                        out.println("Appel à retourneMembre()");
-                        break;
-                    case 4:
-                        out.println("Appel à ajouteMembre()");
-                        break;
-                    case 5:
-                        out.println("Appel à modifieMembre()");
-                        break;
-                    case 6:
-                        out.println("Appel à supprimeMembre()");
-                        break;
-                    case 7:
-                        out.println("Appel à metMembreSurListeRouge()");
-                        break;
-                    case 8:
-                        out.println("Appel à retireMembreSurListeRouge()");
-                        break;
-                    default:
-                        out.println("Choix non valide. Entrez un nombre entre 1 et 8.");
-                        break;
-                }
+                traiterChoix(choix);
 
                 // Ré-affiche le menu après traitement
-                   out.println(menu());
+                out.println(menu());
                 out.println("END_MENU");
             }
         } catch (IOException e) {
@@ -87,6 +65,69 @@ public class GestionnaireClient implements Runnable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void traiterChoix(int choix) {
+        try {
+            switch (choix) {
+                case 1: // Ajouter un membre
+                    Personne personne = new Personne(null, null, null, null, null, null, null, null, false);
+
+                    out.println("Entrez le nom du membre :");
+                    personne.setNom(in.readLine());
+                    out.println("Entrez le prenom du membre :");
+                    personne.setPrenom(in.readLine());
+                    out.println("Entrez le matricule du membre :");
+                    personne.setMatricule(in.readLine());
+                    out.println("Entrez le telephone du membre :");
+                    personne.setTelephone(in.readLine());
+                    out.println("Entrez l'adresse_courriel du membre :");
+
+                    personne.setAdresseCourriel(in.readLine());
+
+                    out.println("Entrez le domaine d'activité du membre : ");
+                    personne.setDomaineActivite(in.readLine());
+
+                    out.println("Entrez le mot de passe (si applicable) : ");
+                    personne.setMotDePasse(in.readLine());
+
+                    out.println("Entrez la catégorie (professeur / auxiliaire / étudiant) : ");
+                    personne.setCategorie(in.readLine());
+
+                    out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
+                    String rep = in.readLine();
+                    boolean surListeRouge = rep.equalsIgnoreCase("oui");
+                    personne.setListeRouge(surListeRouge);
+
+                    int resultat = personneDAO.insert(personne);
+
+                    break;
+
+                case 2: // Lister professeurs par domaine
+                    out.println("Entrez le domaine d'activité:");
+                    String domaine = in.readLine();
+                    List<Personne> profs = personneDAO.getProfesseursParDomaine(domaine);
+                    break;
+
+                case 3: // Rechercher un membre
+                    out.println("Entrez le nom ou matricule:");
+                    String identifiant = in.readLine();
+                    Personne membre = personneDAO.getMembre(identifiant);
+                    break;
+
+                case 4: /*
+                         * Ajouter membre (admin seulement)
+                         * if (verifierMotDePasse()) {
+                         * ajouterNouveauMembre();
+                         * }
+                         */
+                    break;
+
+                // ... autres cas
+            }
+        } catch (SQLException | IOException e) {
+            out.println("Erreur: " + e.getMessage());
         }
     }
 

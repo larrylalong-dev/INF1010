@@ -2,61 +2,27 @@ package Dao;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import Entite.Personne;
 
 public interface PersonneDAO {
 
+    // 🔹 Méthodes CRUD principales
     Personne get(int id) throws SQLException;
-
     List<Personne> getAll() throws SQLException;
-
-    int save(Personne personne) throws SQLException;
-
     int insert(Personne personne) throws SQLException;
-
     int update(Personne personne) throws SQLException;
+    int delete(Personne personne) throws SQLException;
 
-    int delete(Personne personne);
 
-    public static List<Personne> getMembresParCategorie(String categorie) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMembresParCategorie'");
-    }
-
-    public static List<Personne> getProfesseursParDomaine(String domaine) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProfesseursParDomaine'");
-    }
-
-    public static Personne getMembre(String identifiant) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMembre'");
-    }
-
-    public static void ajouterMembre(Personne membre) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ajouterMembre'");
-    }
-
-    public static void modifierMembre(Personne membre) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'modifierMembre'");
-    }
-
-    public static void supprimerMembre(String identifiant) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'supprimerMembre'");
-    }
-
-    public static void mettreSurListeRouge(String identifiant) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mettreSurListeRouge'");
-    }
-
-    public static void retirerDeListeRouge(String identifiant) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'retirerDeListeRouge'");
-    }
-
+    // 🔹 Méthodes spécifiques à ton application
+    List<Personne> getMembresParCategorie(String categorie) throws SQLException;
+    List<Personne> getProfesseursParDomaine(String domaine) throws SQLException;
+    Personne getMembre(String identifiant) throws SQLException;
+    void ajouterMembre(Personne membre) throws SQLException;
+    void modifierMembre(Personne membre) throws SQLException;
+    void supprimerMembre(String identifiant) throws SQLException;
+    void mettreSurListeRouge(String identifiant) throws SQLException;
+    void retirerDeListeRouge(String identifiant) throws SQLException;
 }
+
+
