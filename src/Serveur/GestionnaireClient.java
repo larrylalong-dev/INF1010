@@ -73,17 +73,20 @@ public class GestionnaireClient implements Runnable {
             switch (choix) {
                 case 1: // Ajouter un membre
                     Personne personne = new Personne(null, null, null, null, null, null, null, null, false);
-
+                    
                     out.println("Entrez le nom du membre :");
                     personne.setNom(in.readLine());
+
                     out.println("Entrez le prenom du membre :");
                     personne.setPrenom(in.readLine());
+
                     out.println("Entrez le matricule du membre :");
                     personne.setMatricule(in.readLine());
+
                     out.println("Entrez le telephone du membre :");
                     personne.setTelephone(in.readLine());
-                    out.println("Entrez l'adresse_courriel du membre :");
 
+                    out.println("Entrez l'adresse_courriel du membre :");
                     personne.setAdresseCourriel(in.readLine());
 
                     out.println("Entrez le domaine d'activité du membre : ");
@@ -96,13 +99,29 @@ public class GestionnaireClient implements Runnable {
                     personne.setCategorie(in.readLine());
 
                     out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
+
                     String rep = in.readLine();
-                    boolean surListeRouge = rep.equalsIgnoreCase("oui");
-                    personne.setListeRouge(surListeRouge);
+                boolean surListeRouge = rep.equalsIgnoreCase("oui");
+                personne.setListeRouge(surListeRouge);
 
-                    int resultat = personneDAO.insert(personne);
+                int resultat = personneDAO.insert(personne);
 
-                    break;
+
+                 if (resultat > 0) {
+                    out.println("Membre ajouté avec succès!");
+                } else {
+                    out.println(" Erreur lors de l'ajout du membre");
+                }
+                out.println("END_RESULT"); // Marqueur de fin
+                break;
+                    /*
+                     * out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
+                     * String rep = in.readLine();
+                     * boolean surListeRouge = rep.equalsIgnoreCase("oui");
+                     * personne.setListeRouge(surListeRouge);
+                     */
+
+                    // int resultat = personneDAO.insert(personne);
 
                 case 2: // Lister professeurs par domaine
                     out.println("Entrez le domaine d'activité:");

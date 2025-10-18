@@ -16,7 +16,37 @@ public class Client {
         BufferedReader clavier = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-        afficherMenu(input);
+        Thread readerThread = new Thread(() -> {
+
+            try {
+                String line;
+                while ((line = input.readLine()) != null) {
+                    if (line.equals("END_MENU")) {
+                        System.out.print("\n> ");
+                    } else {
+                        System.out.println(line);
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("Connexion perdue avec le serveur");
+
+            }
+        });
+
+        readerThread.start();
+
+        String command;
+        while((command = clavier.readLine()) != null) {
+            if (command.equalsIgnoreCase("quit")) {
+                out.println("quit");
+                break;
+            }
+            out.println(command);
+        }
+
+        socket.close();
+
+       /*  afficherMenu(input);
 
         while (true) {
 
@@ -29,10 +59,9 @@ public class Client {
             out.println(command);
 
             afficherMenu(input);
-
         }
 
-        socket.close();
+        socket.close(); */
 
     }
 
