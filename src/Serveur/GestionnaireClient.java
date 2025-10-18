@@ -107,7 +107,7 @@ public class GestionnaireClient implements Runnable {
                          * }
                          */
 
-                    personne = new Personne(null, null, null, null, null, null, null, null, false);
+                    //personne = new Personne(null, null, null, null, null, null, null, null, false);
 
                     out.println("Entrez le nom du membre :");
                     personne.setNom(in.readLine());
@@ -157,7 +157,7 @@ public class GestionnaireClient implements Runnable {
                     String IdNumero = in.readLine();
                     int id = Integer.parseInt(IdNumero);
                     PersonneDAOImpl personneDAO = new PersonneDAOImpl();
-                    Personne personne = personneDAO.get(id);
+                    personne = personneDAO.get(id);
 
                     personneDAO.delete(personne);
                     // System.out.println(personne); personne = personne.
