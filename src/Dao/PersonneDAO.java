@@ -6,7 +6,7 @@ import Entite.Personne;
 
 public interface PersonneDAO {
 
-    // 🔹 Méthodes CRUD principales
+    //  Méthodes CRUD principales
     Personne get(int id) throws SQLException;
     List<Personne> getAll() throws SQLException;
     int insert(Personne personne) throws SQLException;
@@ -14,7 +14,7 @@ public interface PersonneDAO {
     int delete(Personne personne) throws SQLException;
 
 
-    // 🔹 Méthodes spécifiques à ton application
+    //  Méthodes spécifiques à ton application
     List<Personne> getMembresParCategorie(String categorie) throws SQLException;
     List<Personne> getProfesseursParDomaine(String domaine) throws SQLException;
     Personne getMembre(String identifiant) throws SQLException;

@@ -18,6 +18,7 @@ public class GestionnaireClient implements Runnable {
     private BufferedReader in;
     private PrintWriter out;
     private PersonneDAO personneDAO;
+    Personne personne = new Personne(null, null, null, null, null, null, null, null, false);
 
     // Initialise les flux d'entrée et sortie pour un client connecté et //
     // Instanciation du DAO
@@ -72,8 +73,41 @@ public class GestionnaireClient implements Runnable {
         try {
             switch (choix) {
                 case 1: // Ajouter un membre
-                    Personne personne = new Personne(null, null, null, null, null, null, null, null, false);
-                    
+
+                    // int resultat = personneDAO.insert(personne);
+
+                case 2: // Lister professeurs par domaine
+
+                    out.println("Entrez le domaine d'activité:");
+                    String domaine = in.readLine();
+                    List<Personne> profs = personneDAO.getProfesseursParDomaine(domaine);
+                    break;
+
+                case 3: // Rechercher un membre
+
+                    out.println("Entrez le nom du membre :");
+                    personne.setNom(in.readLine());
+
+                    out.println("Entrez le prenom du membre :");
+                    personne.setPrenom(in.readLine());
+
+                    out.println("Entrez le matricule du membre :");
+                    personne.setMatricule(in.readLine());
+
+                    out.println("Entrez le nom ou matricule:");
+                    String identifiant = in.readLine();
+                    Personne membre = personneDAO.getMembre(identifiant);
+                    break;
+
+                case 4: /*
+                         * Ajouter membre (admin seulement)
+                         * if (verifierMotDePasse()) {
+                         * ajouterNouveauMembre();
+                         * }
+                         */
+
+                    personne = new Personne(null, null, null, null, null, null, null, null, false);
+
                     out.println("Entrez le nom du membre :");
                     personne.setNom(in.readLine());
 
@@ -101,46 +135,32 @@ public class GestionnaireClient implements Runnable {
                     out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
 
                     String rep = in.readLine();
-                boolean surListeRouge = rep.equalsIgnoreCase("oui");
-                personne.setListeRouge(surListeRouge);
+                    boolean surListeRouge = rep.equalsIgnoreCase("oui");
+                    personne.setListeRouge(surListeRouge);
 
-                int resultat = personneDAO.insert(personne);
+                    int resultat = personneDAO.insert(personne);
 
-
-                 if (resultat > 0) {
-                    out.println("Membre ajouté avec succès!");
-                } else {
-                    out.println(" Erreur lors de l'ajout du membre");
-                }
-                out.println("END_RESULT"); // Marqueur de fin
-                break;
-                    /*
-                     * out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
-                     * String rep = in.readLine();
-                     * boolean surListeRouge = rep.equalsIgnoreCase("oui");
-                     * personne.setListeRouge(surListeRouge);
-                     */
-
-                    // int resultat = personneDAO.insert(personne);
-
-                case 2: // Lister professeurs par domaine
-                    out.println("Entrez le domaine d'activité:");
-                    String domaine = in.readLine();
-                    List<Personne> profs = personneDAO.getProfesseursParDomaine(domaine);
+                    if (resultat > 0) {
+                        out.println("Membre ajouté avec succès!");
+                    } else {
+                        out.println(" Erreur lors de l'ajout du membre");
+                    }
+                    out.println("END_RESULT"); // Marqueur de fin
                     break;
 
-                case 3: // Rechercher un membre
-                    out.println("Entrez le nom ou matricule:");
-                    String identifiant = in.readLine();
-                    Personne membre = personneDAO.getMembre(identifiant);
-                    break;
+                case 5:
+                    // Supprimer un membre;
 
-                case 4: /*
-                         * Ajouter membre (admin seulement)
-                         * if (verifierMotDePasse()) {
-                         * ajouterNouveauMembre();
-                         * }
-                         */
+                    out.println("A partir de l interface On fait un get id du membre ki sera affiché:");
+                    System.out.println("exemple : id = 3 j ai deja enleve donc choisiautre numero");
+                    String IdNumero = in.readLine();
+                    int id = Integer.parseInt(IdNumero);
+                    PersonneDAOImpl personneDAO = new PersonneDAOImpl();
+                    Personne personne = personneDAO.get(id);
+
+                    personneDAO.delete(personne);
+                    // System.out.println(personne); personne = personne.
+
                     break;
 
                 // ... autres cas
