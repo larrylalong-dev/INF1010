@@ -72,19 +72,19 @@ public class GestionnaireClient implements Runnable {
     private void traiterChoix(int choix) {
         try {
             switch (choix) {
-                case 1: // Ajouter un membre
+                case 1: // //pas fini---> Lister membres par catégorie
 
                     // int resultat = personneDAO.insert(personne);
 
-                case 2: // Lister professeurs par domaine
+                case 2: //pas fini--> Lister professeurs par domaine
 
-                    out.println("Entrez le domaine d'activité:");
+                   /*out.println("Entrez le domaine d'activité:");
                     String domaine = in.readLine();
                     List<Personne> profs = personneDAO.getProfesseursParDomaine(domaine);
-                    break;
+                    break; */ 
 
-                case 3: // Rechercher un membre
-
+                case 3: //pas encore fini----> Rechercher un membre
+/* 
                     out.println("Entrez le nom du membre :");
                     personne.setNom(in.readLine());
 
@@ -98,8 +98,9 @@ public class GestionnaireClient implements Runnable {
                     String identifiant = in.readLine();
                     Personne membre = personneDAO.getMembre(identifiant);
                     break;
-
-                case 4: /*
+*/
+                case 4: //biennnnnnn 
+                 /*
                          * Ajouter membre (admin seulement)
                          * if (verifierMotDePasse()) {
                          * ajouterNouveauMembre();
@@ -148,7 +149,7 @@ public class GestionnaireClient implements Runnable {
                     out.println("END_RESULT"); // Marqueur de fin
                     break;
 
-                case 5:
+                case 5: //biennnnnnnn 
                     // Supprimer un membre;
 
                     out.println("A partir de l interface On fait un get id du membre ki sera affiché:");
@@ -170,19 +171,21 @@ public class GestionnaireClient implements Runnable {
         }
     }
 
+
+
     // Renvoie le menu principal affiché au client
     public static String menu() {
-        return "Bienvenue sur notre plateforme. Que souhaitez-vous faire aujourd'hui ?\n" +
-                "MENU\n" +
-                " 1 - retourneMembreParCategorie()\n" +
-                " 2 - retourneProfesseurParDomaine()\n" +
-                " 3 - retourneMembre()\n" +
-                " 4 - ajouteMembre()\n" +
-                " 5 - modifieMembre()\n" +
-                " 6 - supprimeMembre()\n" +
-                " 7 - metMembreSurListeRouge()\n" +
-                " 8 - retireMembreSurListeRouge()\n" +
-                "Tapez votre choix (1-8) ou 'quit' pour quitter.";
-    }
+    return "Bienvenue sur notre plateforme. Que souhaitez-vous faire aujourd'hui ?\n" +
+            "MENU\n" +
+            " 1 - Lister les membres d'une catégorie donnée\n" +
+            " 2 - Lister les professeurs dans un domaine d'activité donné\n" +
+            " 3 - Rechercher un membre\n" +
+            " 4 - Ajouter un membre\n" +
+            " 5 - Modifier (mettre à jour) un membre\n" +
+            " 6 - Supprimer un membre\n" +
+            " 7 - Mettre un membre sur la liste rouge\n" +
+            " 8 - Enlever un membre de la liste rouge\n" +
+            "Tapez votre choix (1-8) ou 'quit' pour quitter.";
+}
 
 }
