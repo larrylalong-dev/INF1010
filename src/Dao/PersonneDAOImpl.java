@@ -14,16 +14,18 @@ public class PersonneDAOImpl implements PersonneDAO {
 
     Connection connection = null;
     PreparedStatement preparedStatement = null;
+    String sqlScript;
+    ResultSet rs;
 
     @Override
     public Personne getMembreById(int id) throws SQLException {
-        Connection connection = DatabaseConnection.getConnection();
+        connection = DatabaseConnection.getConnection();
         Personne personne = null;
 
-        String sqlScript = "SELECT id, nom, prenom, matricule, telephone, adresse_courriel, domaine_activite, mot_de_passe, categorie, liste_rouge FROM personne WHERE id = ? ";
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlScript);
+        sqlScript = "SELECT id, nom, prenom, matricule, telephone, adresse_courriel, domaine_activite, mot_de_passe, categorie, liste_rouge FROM personne WHERE id = ? ";
+        preparedStatement = connection.prepareStatement(sqlScript);
         preparedStatement.setInt(1, id);
-        ResultSet rs = preparedStatement.executeQuery();
+        rs = preparedStatement.executeQuery();
 
         if (rs.next()) {
             personne = new Personne();
@@ -48,7 +50,7 @@ public class PersonneDAOImpl implements PersonneDAO {
     @Override
     public List<Personne> getAll() throws SQLException {
 
-        ResultSet rs = null;
+        rs = null;
 
         List<Personne> personnes = new ArrayList<>();
 
@@ -89,7 +91,7 @@ public class PersonneDAOImpl implements PersonneDAO {
 
         connection = DatabaseConnection.getConnection();
 
-        String sqlScript = "INSERT INTO personne (nom, prenom, matricule, telephone, " +
+        sqlScript = "INSERT INTO personne (nom, prenom, matricule, telephone, " +
                 "adresse_courriel, domaine_activite, mot_de_passe, categorie, liste_rouge) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -123,7 +125,7 @@ public class PersonneDAOImpl implements PersonneDAO {
 
         connection = DatabaseConnection.getConnection();
 
-        String sqlScript = "UPDATE personne SET nom=?, prenom=?, matricule=?, telephone=?, " +
+        sqlScript = "UPDATE personne SET nom=?, prenom=?, matricule=?, telephone=?, " +
                 "adresse_courriel=?, domaine_activite=?, mot_de_passe=?, " +
                 "categorie=?, liste_rouge=? WHERE id=?";
 
@@ -158,8 +160,8 @@ public class PersonneDAOImpl implements PersonneDAO {
 
         connection = DatabaseConnection.getConnection();
 
-        String sqlScript = "DELETE FROM personne WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sqlScript);
+        sqlScript = "DELETE FROM personne WHERE id = ?";
+        preparedStatement = connection.prepareStatement(sqlScript);
 
         preparedStatement.setInt(1, personne.getId());
         int resultat = preparedStatement.executeUpdate();
@@ -170,12 +172,40 @@ public class PersonneDAOImpl implements PersonneDAO {
         return resultat;
     }
 
-     @Override
-    public Personne getMembre(Personne personne) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMembre'");
+    @Override
+    public Personne rechercherUnmembre(Personne personne) throws SQLException {
+
+        sqlScript = "SELECT * FROM personne WHERE nom = ? AND prenom = ? AND matricule = ? AND telephone = ? AND adresse_courriel = ?";
+
+        connection = DatabaseConnection.getConnection();
+        preparedStatement = connection.prepareStatement(sqlScript);
+
+        preparedStatement.setString(1, personne.getNom());
+        preparedStatement.setString(2, personne.getPrenom());
+        preparedStatement.setString(3, personne.getMatricule());
+        preparedStatement.setString(4, personne.getTelephone());
+        preparedStatement.setString(5, personne.getAdresseCourriel());
+
+        rs = preparedStatement.executeQuery();
+        personne = null;
+
+        while (rs.next()) {
+    personne = new Personne(); // Crée une nouvelle personne
+    personne.setId(rs.getInt("id"));
+    personne.setNom(rs.getString("nom"));
+    personne.setPrenom(rs.getString("prenom"));
+    personne.setMatricule(rs.getString("matricule"));
+    personne.setTelephone(rs.getString("telephone"));
+    personne.setAdresseCourriel(rs.getString("adresse_courriel"));
+    personne.setDomaineActivite(rs.getString("domaine_activite"));
+    personne.setMotDePasse(rs.getString("mot_de_passe"));
+    personne.setCategorie(rs.getString("categorie"));
+    personne.setListeRouge(rs.getBoolean("liste_rouge"));
+}
+
+        return personne;
     }
-    
+
     @Override
     public List<Personne> getMembresParCategorie(int categorie) throws SQLException {
         // TODO Auto-generated method stub
@@ -188,8 +218,6 @@ public class PersonneDAOImpl implements PersonneDAO {
         throw new UnsupportedOperationException("Unimplemented method 'getProfesseursParDomaine'");
     }
 
-   
-
     @Override
     public void mettreSurListeRouge(int identifiant) throws SQLException {
         // TODO Auto-generated method stub
@@ -201,7 +229,5 @@ public class PersonneDAOImpl implements PersonneDAO {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'retirerDeListeRouge'");
     }
-
-   
 
 }

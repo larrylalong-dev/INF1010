@@ -12,7 +12,7 @@ public interface PersonneDAO {
 
     int supprimerMembre(Personne personne) throws SQLException;
 
-    Personne getMembre(Personne personne) throws SQLException; // --revoir
+    Personne rechercherUnmembre(Personne personne) throws SQLException; // --revoir
 
     Personne getMembreById(int id) throws SQLException;
 

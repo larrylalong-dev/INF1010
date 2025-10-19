@@ -88,20 +88,35 @@ public class GestionnaireClient implements Runnable {
                      * break;
                      */
 
-                case 3: // Rechercher un membre
-                    
-                      out.println("Entrez le nom du membre :");
-                      personne.setNom(in.readLine());
-                      
-                      out.println("Entrez le prenom du membre :");
-                      personne.setPrenom(in.readLine());
-                      
-                      out.println("Entrez le matricule du membre :");
-                      personne.setMatricule(in.readLine());
-                      
-                      //Personne membre = personneDAO.getMembreById(identifiant);
-                      break;
-                     
+                case 3: // Rechercher un membre --> bon
+
+                    out.println("Entrez le nom du membre :");
+                    personne.setNom(in.readLine());
+
+                    out.println("Entrez le prenom du membre :");
+                    personne.setPrenom(in.readLine());
+
+                    out.println("Entrez le matricule du membre :");
+                    personne.setMatricule(in.readLine());
+
+                    out.println("Entrez le telephone du membre :");
+                    personne.setTelephone(in.readLine());
+
+                    out.println("Entrez l'adresse_courriel du membre :");
+                    personne.setAdresseCourriel(in.readLine());
+
+                    personne = personneDAO.rechercherUnmembre(personne);
+
+                    if (personne != null) {
+                        out.println("Membre trouvé : " + personne.toString());
+                    } else {
+                        out.println("Aucun membre correspondant trouvé.");
+                    }
+                    out.println("END_RESULT");
+
+                    // Personne membre = personneDAO.getMembreById(identifiant);
+                    break;
+
                 case 4: // biennnnnnn
                     /*
                      * Ajouter membre (admin seulement)
@@ -156,7 +171,7 @@ public class GestionnaireClient implements Runnable {
                 case 5: // 5 - Modifier (mettre à jour) un membre
 
                     // PersonneDAOImpl personneDAO = new PersonneDAOImpl();
-                    // NORMALEMENT LE CLIENT N EST PAS CENSE RENTRE L ID DU MEMBRES ..MAIS MOI JE
+                    // NORMALEMENT LE CLIENT N EST PAS CENSE RENTRE L ID DU MEMBRE ..MAIS MOI JE
                     // FAIS CELA POUR SIMULER --> L UPDATE
 
                     out.println("Entrez l'identifiant du membre :");
@@ -198,7 +213,6 @@ public class GestionnaireClient implements Runnable {
 
                     resultat = personneDAO.modifierMembre(personne);
 
-
                     if (resultat > 0) {
                         out.println("Membre mis a jour avec succès!");
                     } else {
@@ -234,10 +248,10 @@ public class GestionnaireClient implements Runnable {
                 "MENU\n" +
                 " 1 - Lister les membres d'une catégorie donnée\n" +
                 " 2 - Lister les professeurs dans un domaine d'activité donné\n" +
-                " 3 - Rechercher un membre\n" +  
-                " 4 - Ajouter un membre\n" +  //fait
-                " 5 - Modifier (mettre à jour) un membre\n" +  //fait
-                " 6 - Supprimer un membre\n" +  //fait
+                " 3 - Rechercher un membre\n" + //fait
+                " 4 - Ajouter un membre\n" + // fait
+                " 5 - Modifier (mettre à jour) un membre\n" + // fait
+                " 6 - Supprimer un membre\n" + // fait
                 " 7 - Mettre un membre sur la liste rouge\n" +
                 " 8 - Enlever un membre de la liste rouge\n" +
                 "Tapez votre choix (1-8) ou 'quit' pour quitter.";
