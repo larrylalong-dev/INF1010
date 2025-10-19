@@ -196,7 +196,7 @@ public class GestionnaireClient implements Runnable {
                     surListeRouge = rep.equalsIgnoreCase("oui");
                     personne.setListeRouge(surListeRouge);
 
-                    resultat = personneDAO.update(personne);
+                    resultat = personneDAO.modifierMembre(personne);
 
 
                     if (resultat > 0) {
@@ -217,7 +217,7 @@ public class GestionnaireClient implements Runnable {
                     PersonneDAOImpl personneDAO = new PersonneDAOImpl();
                     personne = personneDAO.getMembreById(id);
 
-                    personneDAO.delete(personne);
+                    personneDAO.supprimerMembre(personne);
                     // System.out.println(personne); personne = personne.
                     break;
 

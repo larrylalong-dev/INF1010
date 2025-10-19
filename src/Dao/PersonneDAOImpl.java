@@ -117,7 +117,7 @@ public class PersonneDAOImpl implements PersonneDAO {
     }
 
     @Override
-    public int update(Personne personne) throws SQLException {
+    public int modifierMembre(Personne personne) throws SQLException {
 
         int rowsAffected = 0;
 
@@ -154,7 +154,7 @@ public class PersonneDAOImpl implements PersonneDAO {
     }
 
     @Override
-    public int delete(Personne personne) throws SQLException {
+    public int supprimerMembre(Personne personne) throws SQLException {
 
         connection = DatabaseConnection.getConnection();
 
@@ -170,43 +170,38 @@ public class PersonneDAOImpl implements PersonneDAO {
         return resultat;
     }
 
+     @Override
+    public Personne getMembre(Personne personne) throws SQLException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMembre'");
+    }
+    
     @Override
-    public List<Personne> getMembresParCategorie(String categorie) throws SQLException {
+    public List<Personne> getMembresParCategorie(int categorie) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getMembresParCategorie'");
     }
 
     @Override
-    public List<Personne> getProfesseursParDomaine(String domaine) throws SQLException {
+    public List<Personne> getProfesseursParDomaine(int domaine) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getProfesseursParDomaine'");
     }
 
    
 
-
     @Override
-    public void modifierMembre(Personne membre) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'modifierMembre'");
-    }
-
-    @Override
-    public void supprimerMembre(String identifiant) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'supprimerMembre'");
-    }
-
-    @Override
-    public void mettreSurListeRouge(String identifiant) throws SQLException {
+    public void mettreSurListeRouge(int identifiant) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'mettreSurListeRouge'");
     }
 
     @Override
-    public void retirerDeListeRouge(String identifiant) throws SQLException {
+    public void retirerDeListeRouge(int identifiant) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'retirerDeListeRouge'");
     }
+
+   
 
 }
