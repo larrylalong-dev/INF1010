@@ -220,8 +220,9 @@ public class PersonneDAOImpl implements PersonneDAO {
 
     @Override
     public void mettreSurListeRouge(int identifiant) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mettreSurListeRouge'");
+         Personne personne = getMembreById(identifiant);
+         //chui ici iiiiiiiiiiiiiiiii
+
     }
 
     @Override
