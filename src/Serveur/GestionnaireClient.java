@@ -70,44 +70,48 @@ public class GestionnaireClient implements Runnable {
     }
 
     private void traiterChoix(int choix) {
+        int idPersonne;
+        String IdNumero;
+
         try {
             switch (choix) {
                 case 1: // //pas fini---> Lister membres par catégorie
 
                     // int resultat = personneDAO.insert(personne);
 
-                case 2: //pas fini--> Lister professeurs par domaine
+                case 2: // pas fini--> Lister professeurs par domaine
 
-                   /*out.println("Entrez le domaine d'activité:");
-                    String domaine = in.readLine();
-                    List<Personne> profs = personneDAO.getProfesseursParDomaine(domaine);
-                    break; */ 
+                    /*
+                     * out.println("Entrez le domaine d'activité:");
+                     * String domaine = in.readLine();
+                     * List<Personne> profs = personneDAO.getProfesseursParDomaine(domaine);
+                     * break;
+                     */
 
-                case 3: //pas encore fini----> Rechercher un membre
-/* 
-                    out.println("Entrez le nom du membre :");
-                    personne.setNom(in.readLine());
+                case 3: // Rechercher un membre
+                    
+                      out.println("Entrez le nom du membre :");
+                      personne.setNom(in.readLine());
+                      
+                      out.println("Entrez le prenom du membre :");
+                      personne.setPrenom(in.readLine());
+                      
+                      out.println("Entrez le matricule du membre :");
+                      personne.setMatricule(in.readLine());
+                      
+                      Personne membre = personneDAO.getMembreById(identifiant);
+                      break;
+                     
+                case 4: // biennnnnnn
+                    /*
+                     * Ajouter membre (admin seulement)
+                     * if (verifierMotDePasse()) {
+                     * ajouterNouveauMembre();
+                     * }
+                     */
 
-                    out.println("Entrez le prenom du membre :");
-                    personne.setPrenom(in.readLine());
-
-                    out.println("Entrez le matricule du membre :");
-                    personne.setMatricule(in.readLine());
-
-                    out.println("Entrez le nom ou matricule:");
-                    String identifiant = in.readLine();
-                    Personne membre = personneDAO.getMembre(identifiant);
-                    break;
-*/
-                case 4: //biennnnnnn 
-                 /*
-                         * Ajouter membre (admin seulement)
-                         * if (verifierMotDePasse()) {
-                         * ajouterNouveauMembre();
-                         * }
-                         */
-
-                    //personne = new Personne(null, null, null, null, null, null, null, null, false);
+                    // personne = new Personne(null, null, null, null, null, null, null, null,
+                    // false);
 
                     out.println("Entrez le nom du membre :");
                     personne.setNom(in.readLine());
@@ -149,19 +153,72 @@ public class GestionnaireClient implements Runnable {
                     out.println("END_RESULT"); // Marqueur de fin
                     break;
 
-                case 5: //biennnnnnnn 
-                    // Supprimer un membre;
+                case 5: // 5 - Modifier (mettre à jour) un membre
+
+                    // PersonneDAOImpl personneDAO = new PersonneDAOImpl();
+                    // NORMALEMENT LE CLIENT N EST PAS CENSE RENTRE L ID DU MEMBRES ..MAIS MOI JE
+                    // FAIS CELA POUR SIMULER --> L UPDATE
+
+                    out.println("Entrez l'identifiant du membre :");
+
+                    IdNumero = in.readLine();
+                    idPersonne = Integer.parseInt(IdNumero);
+
+                    personne.setId(idPersonne);
+
+                    out.println("Entrez le nom du membre :");
+                    personne.setNom(in.readLine());
+
+                    out.println("Entrez le prenom du membre :");
+                    personne.setPrenom(in.readLine());
+
+                    out.println("Entrez le matricule du membre :");
+                    personne.setMatricule(in.readLine());
+
+                    out.println("Entrez le telephone du membre :");
+                    personne.setTelephone(in.readLine());
+
+                    out.println("Entrez l'adresse_courriel du membre :");
+                    personne.setAdresseCourriel(in.readLine());
+
+                    out.println("Entrez le domaine d'activité du membre : ");
+                    personne.setDomaineActivite(in.readLine());
+
+                    out.println("Entrez le mot de passe (si applicable) : ");
+                    personne.setMotDePasse(in.readLine());
+
+                    out.println("Entrez la catégorie (professeur / auxiliaire / étudiant) : ");
+                    personne.setCategorie(in.readLine());
+
+                    out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
+
+                    rep = in.readLine();
+                    surListeRouge = rep.equalsIgnoreCase("oui");
+                    personne.setListeRouge(surListeRouge);
+
+                    resultat = personneDAO.update(personne);
+
+
+                    if (resultat > 0) {
+                        out.println("Membre mis a jour avec succès!");
+                    } else {
+                        out.println("Erreur lors de la mise a jour du membre");
+                    }
+                    out.println("END_RESULT"); // Marqueur de fin
+                    break;
+
+                case 6:// biennnnnnnn
+                       // Supprimer un membre;
 
                     out.println("A partir de l interface On fait un get id du membre ki sera affiché:");
                     System.out.println("exemple : id = 3 j ai deja enleve donc choisiautre numero");
-                    String IdNumero = in.readLine();
+                    IdNumero = in.readLine();
                     int id = Integer.parseInt(IdNumero);
                     PersonneDAOImpl personneDAO = new PersonneDAOImpl();
                     personne = personneDAO.get(id);
 
                     personneDAO.delete(personne);
                     // System.out.println(personne); personne = personne.
-
                     break;
 
                 // ... autres cas
@@ -171,21 +228,19 @@ public class GestionnaireClient implements Runnable {
         }
     }
 
-
-
     // Renvoie le menu principal affiché au client
     public static String menu() {
-    return "Bienvenue sur notre plateforme. Que souhaitez-vous faire aujourd'hui ?\n" +
-            "MENU\n" +
-            " 1 - Lister les membres d'une catégorie donnée\n" +
-            " 2 - Lister les professeurs dans un domaine d'activité donné\n" +
-            " 3 - Rechercher un membre\n" +
-            " 4 - Ajouter un membre\n" +
-            " 5 - Modifier (mettre à jour) un membre\n" +
-            " 6 - Supprimer un membre\n" +
-            " 7 - Mettre un membre sur la liste rouge\n" +
-            " 8 - Enlever un membre de la liste rouge\n" +
-            "Tapez votre choix (1-8) ou 'quit' pour quitter.";
-}
+        return "Bienvenue sur notre plateforme. Que souhaitez-vous faire aujourd'hui ?\n" +
+                "MENU\n" +
+                " 1 - Lister les membres d'une catégorie donnée\n" +
+                " 2 - Lister les professeurs dans un domaine d'activité donné\n" +
+                " 3 - Rechercher un membre\n" +  
+                " 4 - Ajouter un membre\n" +  //fait
+                " 5 - Modifier (mettre à jour) un membre\n" +  //fait
+                " 6 - Supprimer un membre\n" +  //fait
+                " 7 - Mettre un membre sur la liste rouge\n" +
+                " 8 - Enlever un membre de la liste rouge\n" +
+                "Tapez votre choix (1-8) ou 'quit' pour quitter.";
+    }
 
 }

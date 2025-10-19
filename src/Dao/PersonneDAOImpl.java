@@ -16,7 +16,7 @@ public class PersonneDAOImpl implements PersonneDAO {
     PreparedStatement preparedStatement = null;
 
     @Override
-    public Personne get(int id) throws SQLException {
+    public Personne getMembreById(int id) throws SQLException {
         Connection connection = DatabaseConnection.getConnection();
         Personne personne = null;
 
@@ -182,11 +182,7 @@ public class PersonneDAOImpl implements PersonneDAO {
         throw new UnsupportedOperationException("Unimplemented method 'getProfesseursParDomaine'");
     }
 
-    @Override
-    public Personne getMembre(String identifiant) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMembre'");
-    }
+   
 
     @Override
     public void ajouterMembre(Personne membre) throws SQLException {
