@@ -6,20 +6,18 @@ import Entite.Personne;
 
 public interface PersonneDAO {
 
-    //  Méthodes CRUD principales
     Personne getMembreById(int id) throws SQLException;
     List<Personne> getAll() throws SQLException;
-    int insert(Personne personne) throws SQLException;
-    int update(Personne personne) throws SQLException;
-    int delete(Personne personne) throws SQLException;
+    int ajouterMembre(Personne personne) throws SQLException;
+    int modifierMembre(Personne personne) throws SQLException;
+    int supprimerMembre(Personne personne) throws SQLException;
+    Personne getMembre(Personne personne) throws SQLException; 
 
 
-    List<Personne> getMembresParCategorie(String categorie) throws SQLException;
-    List<Personne> getProfesseursParDomaine(String domaine) throws SQLException;
-    void ajouterMembre(Personne membre) throws SQLException;
-    void modifierMembre(Personne membre) throws SQLException;
-    void mettreSurListeRouge(String identifiant) throws SQLException;
-    void retirerDeListeRouge(String identifiant) throws SQLException;
+    List<Personne> getMembresParCategorie(int categorie) throws SQLException;
+    List<Personne> getProfesseursParDomaine(int domaine) throws SQLException;
+    void mettreSurListeRouge(int identifiant) throws SQLException;
+    void retirerDeListeRouge(int identifiant) throws SQLException;
 }
 
 

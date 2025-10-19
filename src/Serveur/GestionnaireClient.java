@@ -99,7 +99,7 @@ public class GestionnaireClient implements Runnable {
                       out.println("Entrez le matricule du membre :");
                       personne.setMatricule(in.readLine());
                       
-                      Personne membre = personneDAO.getMembreById(identifiant);
+                      //Personne membre = personneDAO.getMembreById(identifiant);
                       break;
                      
                 case 4: // biennnnnnn
@@ -143,7 +143,7 @@ public class GestionnaireClient implements Runnable {
                     boolean surListeRouge = rep.equalsIgnoreCase("oui");
                     personne.setListeRouge(surListeRouge);
 
-                    int resultat = personneDAO.insert(personne);
+                    int resultat = personneDAO.ajouterMembre(personne);
 
                     if (resultat > 0) {
                         out.println("Membre ajouté avec succès!");
@@ -215,7 +215,7 @@ public class GestionnaireClient implements Runnable {
                     IdNumero = in.readLine();
                     int id = Integer.parseInt(IdNumero);
                     PersonneDAOImpl personneDAO = new PersonneDAOImpl();
-                    personne = personneDAO.get(id);
+                    personne = personneDAO.getMembreById(id);
 
                     personneDAO.delete(personne);
                     // System.out.println(personne); personne = personne.

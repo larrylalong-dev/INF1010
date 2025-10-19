@@ -83,7 +83,7 @@ public class PersonneDAOImpl implements PersonneDAO {
     }
 
     @Override
-    public int insert(Personne personne) throws SQLException {
+    public int ajouterMembre(Personne personne) throws SQLException {
 
         int rowsAffected = 0;
 
@@ -184,11 +184,6 @@ public class PersonneDAOImpl implements PersonneDAO {
 
    
 
-    @Override
-    public void ajouterMembre(Personne membre) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'ajouterMembre'");
-    }
 
     @Override
     public void modifierMembre(Personne membre) throws SQLException {
