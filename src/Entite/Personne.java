@@ -138,6 +138,7 @@ public class Personne {
                 ", telephone='" + this.telephone + '\'' +
                 ", adresseCourriel='" + this.adresseCourriel + '\'' +
                 ", domaineActivite='" + this.domaineActivite + '\'' +
+                ", motDePasse='" + this.motDePasse + '\'' +
                 ", categorie='" + this.categorie + '\'' +
                 ", listeRouge=" + this.listeRouge +
                 '}';

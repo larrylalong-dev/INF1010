@@ -190,18 +190,18 @@ public class PersonneDAOImpl implements PersonneDAO {
         personne = null;
 
         while (rs.next()) {
-    personne = new Personne(); // Crée une nouvelle personne
-    personne.setId(rs.getInt("id"));
-    personne.setNom(rs.getString("nom"));
-    personne.setPrenom(rs.getString("prenom"));
-    personne.setMatricule(rs.getString("matricule"));
-    personne.setTelephone(rs.getString("telephone"));
-    personne.setAdresseCourriel(rs.getString("adresse_courriel"));
-    personne.setDomaineActivite(rs.getString("domaine_activite"));
-    personne.setMotDePasse(rs.getString("mot_de_passe"));
-    personne.setCategorie(rs.getString("categorie"));
-    personne.setListeRouge(rs.getBoolean("liste_rouge"));
-}
+            personne = new Personne(); // Crée une nouvelle personne
+            personne.setId(rs.getInt("id"));
+            personne.setNom(rs.getString("nom"));
+            personne.setPrenom(rs.getString("prenom"));
+            personne.setMatricule(rs.getString("matricule"));
+            personne.setTelephone(rs.getString("telephone"));
+            personne.setAdresseCourriel(rs.getString("adresse_courriel"));
+            personne.setDomaineActivite(rs.getString("domaine_activite"));
+            personne.setMotDePasse(rs.getString("mot_de_passe"));
+            personne.setCategorie(rs.getString("categorie"));
+            personne.setListeRouge(rs.getBoolean("liste_rouge"));
+        }
 
         return personne;
     }
@@ -219,16 +219,21 @@ public class PersonneDAOImpl implements PersonneDAO {
     }
 
     @Override
-    public void mettreSurListeRouge(int identifiant) throws SQLException {
-         Personne personne = getMembreById(identifiant);
-         //chui ici iiiiiiiiiiiiiiiii
-
-    }
-
-    @Override
     public void retirerDeListeRouge(int identifiant) throws SQLException {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'retirerDeListeRouge'");
     }
 
+    @Override
+    public void mettreSurListeRouge(int identifiant) throws SQLException {
+        Personne personne = getMembreById(identifiant);
+        personne.setListeRouge(true);
+        int resultat = modifierMembre(personne);
+
+        if (resultat == 0) {
+            System.out.println(personne.getNom() + personne.getPrenom() + "a été ajouté à la liste rouge");
+
+        }
+
+    }
 }
