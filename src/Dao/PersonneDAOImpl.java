@@ -206,9 +206,39 @@ public class PersonneDAOImpl implements PersonneDAO {
     }
 
     @Override
-    public List<Personne> getMembresParCategorie(int categorie) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getMembresParCategorie'");
+     public List<Personne> getMembresParCategorie(String categorie) throws SQLException {
+        List<Personne> personnes = new ArrayList<>();
+
+        String sql = "SELECT id, nom, prenom, matricule, telephone, adresse_courriel, " +
+                "domaine_activite, mot_de_passe, categorie, liste_rouge " +
+                "FROM personne WHERE categorie = ? ORDER BY nom, prenom";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, categorie);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Personne p = new Personne();
+                    p.setId(rs.getInt("id"));
+                    p.setNom(rs.getString("nom"));
+                    p.setPrenom(rs.getString("prenom"));
+                    p.setMatricule(rs.getString("matricule"));
+                    p.setTelephone(rs.getString("telephone"));
+                    p.setAdresseCourriel(rs.getString("adresse_courriel"));
+                    p.setDomaineActivite(rs.getString("domaine_activite"));
+                    p.setMotDePasse(rs.getString("mot_de_passe"));
+                    p.setCategorie(rs.getString("categorie"));
+                    p.setListeRouge(rs.getBoolean("liste_rouge"));
+
+                    personnes.add(p);
+                }
+            }
+        }
+
+        System.out.println(personnes.size() + " membre(s) trouvé(s) dans la catégorie : " + categorie);
+        return personnes;
     }
 
     @Override
