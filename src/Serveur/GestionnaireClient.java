@@ -149,7 +149,7 @@ public class GestionnaireClient implements Runnable {
                     out.println("Entrez le mot de passe (si applicable) : ");
                     personne.setMotDePasse(in.readLine());
 
-                    out.println("Entrez la catégorie (professeur / auxiliaire / étudiant) : ");
+                    out.println("Entrez la catégorie (professeur / auxiliaire / étudiant/ administrateur) : ");
                     personne.setCategorie(in.readLine());
 
                     out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
@@ -168,70 +168,73 @@ public class GestionnaireClient implements Runnable {
                     out.println("END_RESULT"); // Marqueur de fin
                     break;
 
-                case 5: // 5 - Modifier (mettre à jour) un membre
-
-                    // PersonneDAOImpl personneDAO = new PersonneDAOImpl();
-                    // NORMALEMENT LE CLIENT N EST PAS CENSE RENTRE L ID DU MEMBRE ..MAIS MOI JE
-                    // FAIS CELA POUR SIMULER --> L UPDATE
-
+                case 5: // Modifier (mettre à jour) un membre
                     out.println("Entrez l'identifiant du membre :");
-                    String tampon;
-
                     IdNumero = in.readLine();
                     idPersonne = Integer.parseInt(IdNumero);
-                    PersonneDAOImpl personneDAOx = new PersonneDAOImpl();
-                    personne = personneDAOx.getMembreById(idPersonne);
- System.out.println(personne.toString() + " avant modification");
-                    // personne.setId(idPersonne);
+
+                    // Récupérer le membre existant depuis la BD
+                    Personne membreExistant = personneDAO.getMembreById(idPersonne);
+                    String tampon;
+
+                    // Afficher les infos actuelles du membre
+
+                    out.println("=== Membre trouvé ===");
+                    out.println("Nom: " + membreExistant.getNom());
+                    out.println("Prénom: " + membreExistant.getPrenom());
+                    out.println("Matricule: " + membreExistant.getMatricule());
+                    out.println("Téléphone: " + membreExistant.getTelephone());
+                    out.println("Email: " + membreExistant.getAdresseCourriel());
+                    out.println("Domaine: " + membreExistant.getDomaineActivite());
+                    out.println("Mot de passe: "
+                            + (membreExistant.getMotDePasse() != null ? membreExistant.getMotDePasse() : "Aucun"));
+                    out.println("Catégorie: " + membreExistant.getCategorie());
+                    out.println("Liste rouge: " + (membreExistant.isListeRouge() ? "Oui" : "Non"));
+                    out.println("====================");
+
+                    // membreExistant.setId(idPersonne);
 
                     out.println("Entrez le nom du membre :");
                     tampon = in.readLine();
-                    personne.setNom((tampon == null || tampon == "" || tampon.isEmpty()) ? personne.getNom() : tampon);
+                    membreExistant.setNom(
+                            (tampon == null || tampon == "" || tampon.isEmpty()) ? membreExistant.getNom() : tampon);
 
                     out.println("Entrez le prenom du membre :");
                     tampon = in.readLine();
-                    personne.setPrenom(tampon.isEmpty() ? personne.getPrenom() : tampon);
+                    membreExistant.setPrenom(tampon.isEmpty() ? membreExistant.getPrenom() : tampon);
 
                     out.println("Entrez le matricule du membre :");
                     tampon = in.readLine();
-                    personne.setMatricule(tampon.isEmpty() ? personne.getMatricule() : tampon);
+                    membreExistant.setMatricule(tampon.isEmpty() ? membreExistant.getMatricule() : tampon);
 
                     out.println("Entrez le telephone du membre :");
                     tampon = in.readLine();
-                    personne.setTelephone(tampon.isEmpty() ? personne.getTelephone() : tampon);
+                    personne.setTelephone(tampon.isEmpty() ? membreExistant.getTelephone() : tampon);
 
                     out.println("Entrez l'adresse_courriel du membre :");
                     tampon = in.readLine();
-                    personne.setAdresseCourriel(tampon.isEmpty() ? personne.getAdresseCourriel() : tampon);
+                    membreExistant.setAdresseCourriel(tampon.isEmpty() ? membreExistant.getAdresseCourriel() : tampon);
 
                     out.println("Entrez le domaine d'activité du membre : ");
                     tampon = in.readLine();
-                    personne.setDomaineActivite(tampon.isEmpty() ? personne.getDomaineActivite() : tampon);
+                    membreExistant.setDomaineActivite(tampon.isEmpty() ? membreExistant.getDomaineActivite() : tampon);
 
                     out.println("Entrez le mot de passe (si applicable) : ");
                     tampon = in.readLine();
-
-                    if (tampon == null || tampon.trim().isEmpty()) {
-                        // Ne rien changer, garder le mot de passe actuel
-                        personne.setMotDePasse(personne.getMotDePasse());
-
-                        out.println("Mot de passe conservé.");
-                    } else {
-                        personne.setMotDePasse(tampon);
-                        out.println("Mot de passe mis à jour.");
-                    }
+                    membreExistant.setMotDePasse((tampon.isEmpty() || tampon.trim().isEmpty() || tampon == null)
+                            ? membreExistant.getMotDePasse()
+                            : tampon);
 
                     out.println("Entrez la catégorie (professeur / auxiliaire / étudiant) : ");
                     tampon = in.readLine();
-                    personne.setCategorie(tampon.isEmpty() ? personne.getCategorie() : tampon);
+                    membreExistant.setCategorie(tampon.isEmpty() ? membreExistant.getCategorie() : tampon);
 
                     out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
-
                     rep = in.readLine();
                     surListeRouge = rep.equalsIgnoreCase("oui");
-                    personne.setListeRouge(surListeRouge ? true : personne.isListeRouge());
+                    membreExistant.setListeRouge(surListeRouge == true ? true : false);
 
-                    resultat = personneDAO.modifierMembre(personne);
+                    resultat = personneDAO.modifierMembre(membreExistant);
 
                     if (resultat > 0) {
                         out.println("Membre mis a jour avec succès!");
@@ -239,6 +242,7 @@ public class GestionnaireClient implements Runnable {
                         out.println("Erreur lors de la mise a jour du membre");
                     }
                     out.println("END_RESULT"); // Marqueur de fin
+
                     break;
 
                 case 6:// biennnnnnnn
@@ -259,11 +263,29 @@ public class GestionnaireClient implements Runnable {
                     out.println("Entrez l'identifiant du membre à mettre sur la liste rouge :");
                     IdNumero = in.readLine();
                     idPersonne = Integer.parseInt(IdNumero);
-                    personneDAO.mettreSurListeRouge(idPersonne);
+                    resultat = personneDAO.gererListeRouge(idPersonne, "oui");
+
+                    personne = personneDAO.getMembreById(idPersonne);
                     out.println(personne.toString());
 
+                    out.println(personne.getNom() + personne.getPrenom() + "a été ajouté à la liste rouge");
+
                     break;
-                // ... autres cas
+
+                case 8:
+                    // 8 - Enlever un membre sur la liste rouge
+                    out.println("Entrez l'identifiant du membre à enlever sur la liste rouge :");
+                    IdNumero = in.readLine();
+                    idPersonne = Integer.parseInt(IdNumero);
+                    resultat = personneDAO.gererListeRouge(idPersonne, "non");
+
+                    personne = personneDAO.getMembreById(idPersonne);
+                    out.println(personne.toString());
+
+                    out.println(personne.getNom() + personne.getPrenom() + "a été enlevé de la liste rouge");
+
+                    break;
+                
             }
         } catch (SQLException | IOException e) {
             out.println("Erreur: " + e.getMessage());
@@ -280,8 +302,8 @@ public class GestionnaireClient implements Runnable {
                 " 4 - Ajouter un membre\n" + // fait
                 " 5 - Modifier (mettre à jour) un membre\n" + // fait
                 " 6 - Supprimer un membre\n" + // fait
-                " 7 - Mettre un membre sur la liste rouge\n" +
-                " 8 - Enlever un membre de la liste rouge\n" +
+                " 7 - Mettre un membre sur la liste rouge\n" + // fait
+                " 8 - Enlever un membre de la liste rouge\n" + //fait
                 "Tapez votre choix (1-8) ou 'quit' pour quitter.";
     }
 

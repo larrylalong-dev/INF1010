@@ -14,7 +14,6 @@ import Dao.PersonneDAO;
 
 public class Server {
 
-
     private static final int PORT = 9090;
 // on doit faire de tel ensorte ke le port si est occupe sur un autre pc on puisse l< incrementer pour le changer 
     private static ArrayList<GestionnaireClient> clients = new ArrayList<>();
@@ -35,7 +34,7 @@ public class Server {
             System.out.println("[SERVER] attend une nouvelle connection cliente ...");
             Socket client = listener.accept();
 
-            System.out.println("[SERVER] Connecté a " + compteClient++ +"client!");
+            System.out.println("[SERVER] Connecté a " + ++compteClient +"client!");
             // envoyeur.println("END_MENU");
             GestionnaireClient clientThread = new GestionnaireClient(client); // 2- Creation de thread pour chak client
             clients.add(clientThread);

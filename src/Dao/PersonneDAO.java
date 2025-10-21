@@ -22,7 +22,6 @@ public interface PersonneDAO {
 
     List<Personne> getProfesseursParDomaine(int domaine) throws SQLException;
 
-    void mettreSurListeRouge(int identifiant) throws SQLException;
+    public int gererListeRouge(int identifiant,String metSurLrouge) throws SQLException;
 
-    void retirerDeListeRouge(int identifiant) throws SQLException;
 }

@@ -36,8 +36,9 @@ public class PersonneDAOImpl implements PersonneDAO {
             personne.setTelephone(rs.getString("telephone") != null ? rs.getString("telephone") : "N/A");
             personne.setAdresseCourriel(rs.getString("adresse_courriel") != null ? rs.getString("adresse_courriel")
                     : "N/A");
-            personne.setAdresseCourriel(rs.getString("domaine_activite") != null ? rs.getString("domaine_activite")
+            personne.setDomaineActivite(rs.getString("domaine_activite") != null ? rs.getString("domaine_activite")
                     : "N/A");
+            personne.setMotDePasse(rs.getString("mot_de_passe"));
             personne.setCategorie(rs.getString("categorie"));
             personne.setListeRouge(rs.getBoolean("liste_rouge"));
         }
@@ -136,7 +137,7 @@ public class PersonneDAOImpl implements PersonneDAO {
         preparedStatement.setString(4, personne.getTelephone());
         preparedStatement.setString(5, personne.getAdresseCourriel());
         preparedStatement.setString(6, personne.getDomaineActivite());
-        preparedStatement.setString(7, personne.getMotDePasse());
+        preparedStatement.setString(7, personne.getMotDePasse()); /////
         preparedStatement.setString(8, personne.getCategorie());
         preparedStatement.setBoolean(9, personne.isListeRouge());
         preparedStatement.setInt(10, personne.getId());
@@ -185,7 +186,6 @@ public class PersonneDAOImpl implements PersonneDAO {
         preparedStatement.setString(3, personne.getMatricule());
         preparedStatement.setString(4, personne.getTelephone());
         preparedStatement.setString(5, personne.getAdresseCourriel());
-
         rs = preparedStatement.executeQuery();
         personne = null;
 
@@ -219,21 +219,20 @@ public class PersonneDAOImpl implements PersonneDAO {
     }
 
     @Override
-    public void retirerDeListeRouge(int identifiant) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'retirerDeListeRouge'");
-    }
-
-    @Override
-    public void mettreSurListeRouge(int identifiant) throws SQLException {
+    public int gererListeRouge(int identifiant, String metSurLrouge) throws SQLException {
         Personne personne = getMembreById(identifiant);
-        personne.setListeRouge(true);
-        int resultat = modifierMembre(personne);
+        int resultat = 0;
 
-        if (resultat == 0) {
-            System.out.println(personne.getNom() + personne.getPrenom() + "a été ajouté à la liste rouge");
+        if (metSurLrouge.equalsIgnoreCase("oui")) {
+            personne.setListeRouge(true);
+            resultat = modifierMembre(personne);
 
+        } else {
+            personne.setListeRouge(false);
+            modifierMembre(personne);
+            resultat = 0;
         }
-
+        return resultat;
     }
+
 }
