@@ -236,10 +236,10 @@ public class PersonneDAOImpl implements PersonneDAO {
                 }
             }
         }
- */
+
         System.out.println(personnes.size() + " membre(s) trouvé(s) dans la catégorie : " + categorie);
         return personnes;
-    }
+    } */
 
     @Override
     public List<Personne> getProfesseursParDomaine(int domaine) throws SQLException {
