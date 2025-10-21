@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
+import CategorieEnum.Categorie;
 import Dao.PersonneDAO;
 import Dao.PersonneDAOImpl;
 import Entite.Personne;
@@ -75,9 +76,31 @@ public class GestionnaireClient implements Runnable {
 
         try {
             switch (choix) {
-                case 1: // //pas fini---> Lister membres par catégorie
 
-                    // int resultat = personneDAO.insert(personne);
+                case 1:
+                    out.println("veillez choisir le numero categorie : \n 1 PROFESSEUR\n 2 ETUDIANT\n 3 ETUDIANT_AUXILIAIRE\n ADMINISTRATEUR");
+                    String prendreCategorie = in.readLine();
+
+                    int choixCategorie = Integer.parseInt(prendreCategorie);
+
+
+                    switch (choixCategorie) {
+                        case 1:
+                            personneDAO.getMembresParCategorie(Categorie.professeur);
+                            break;
+                        case 2:
+                            personneDAO.getMembresParCategorie(Categorie.etudiant);
+                            break;
+                        case 3:
+                            personneDAO.getMembresParCategorie(Categorie.auxiliaire);
+                            break;
+                        case 4:
+                            personneDAO.getMembresParCategorie(Categorie.administrateur);
+                            break;
+                    }
+                    // pas fini--> // pas fini--> // pas fini--> // pas fini--> // pas fini--> //
+                    // pas fini-->
+                    break;
 
                 case 2: // pas fini--> Lister professeurs par domaine
 
@@ -87,7 +110,7 @@ public class GestionnaireClient implements Runnable {
                      * List<Personne> profs = personneDAO.getProfesseursParDomaine(domaine);
                      * break;
                      */
-
+                    break;
                 case 3: // Rechercher un membre --> bon
 
                     out.println("Entrez le nom du membre :");
@@ -150,7 +173,7 @@ public class GestionnaireClient implements Runnable {
                     personne.setMotDePasse(in.readLine());
 
                     out.println("Entrez la catégorie (professeur / auxiliaire / étudiant/ administrateur) : ");
-                    personne.setCategorie(in.readLine());
+                    //personne.setCategorie(in.readLine());
 
                     out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
 
@@ -227,7 +250,7 @@ public class GestionnaireClient implements Runnable {
 
                     out.println("Entrez la catégorie (professeur / auxiliaire / étudiant) : ");
                     tampon = in.readLine();
-                    membreExistant.setCategorie(tampon.isEmpty() ? membreExistant.getCategorie() : tampon);
+                    //membreExistant.setCategorie(tampon.isEmpty() ? membreExistant.getCategorie() : tampon);
 
                     out.println("Le membre est-il sur la liste rouge ? (oui/non) : ");
                     rep = in.readLine();
@@ -285,7 +308,7 @@ public class GestionnaireClient implements Runnable {
                     out.println(personne.getNom() + personne.getPrenom() + "a été enlevé de la liste rouge");
 
                     break;
-                
+
             }
         } catch (SQLException | IOException e) {
             out.println("Erreur: " + e.getMessage());
@@ -303,7 +326,7 @@ public class GestionnaireClient implements Runnable {
                 " 5 - Modifier (mettre à jour) un membre\n" + // fait
                 " 6 - Supprimer un membre\n" + // fait
                 " 7 - Mettre un membre sur la liste rouge\n" + // fait
-                " 8 - Enlever un membre de la liste rouge\n" + //fait
+                " 8 - Enlever un membre de la liste rouge\n" + // fait
                 "Tapez votre choix (1-8) ou 'quit' pour quitter.";
     }
 

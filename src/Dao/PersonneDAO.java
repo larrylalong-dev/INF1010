@@ -2,6 +2,8 @@ package Dao;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import CategorieEnum.Categorie;
 import Entite.Personne;
 
 public interface PersonneDAO {
@@ -18,7 +20,7 @@ public interface PersonneDAO {
 
     List<Personne> getAll() throws SQLException;
 
-    List<Personne> getMembresParCategorie(int categorie) throws SQLException;
+    List<Personne> getMembresParCategorie(Categorie categorie) throws SQLException;
 
     List<Personne> getProfesseursParDomaine(int domaine) throws SQLException;
 

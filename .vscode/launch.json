@@ -4,10 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
-        
 
-        
         {
             "type": "java",
             "name": "Current File",
@@ -36,12 +33,23 @@
             "projectName": "tp1Reseau2_2fdf9e1a"
         },
         {
-            "type": "java",
-            "name": "Server",
+           "type": "java",
+            "name": "Server (JavaFX)",
             "request": "launch",
             "mainClass": "Serveur.Server",
             "projectName": "tp1Reseau2_2fdf9e1a",
-            "vmArgs": "--module-path \"C:/Java/javafx-sdk-17.0.16/lib\" --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path \"C:/javafx-sdk-25/lib\" --add-modules javafx.controls,javafx.fxml"
+        },
+        {
+            "type": "java",
+            "name": "HelloFX",
+            "request": "launch",
+            "mainClass": "HelloFX",
+            "projectName": "tp1Reseau2_2fdf9e1a",
+            "vmArgs": "--module-path \"C:/javafx-sdk-25/lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
+/*"mainClass": "Serveur.Server"
+Spécifie la classe principale (celle qui contient la méthode public static void main(String[] args)).
+Ici, cela veut dire que ton programme démarre avec la classe : */

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import CategorieEnum.Categorie;
 import Database.DatabaseConnection;
 import Entite.Personne;
 
@@ -39,7 +40,8 @@ public class PersonneDAOImpl implements PersonneDAO {
             personne.setDomaineActivite(rs.getString("domaine_activite") != null ? rs.getString("domaine_activite")
                     : "N/A");
             personne.setMotDePasse(rs.getString("mot_de_passe"));
-            personne.setCategorie(rs.getString("categorie"));
+            personne.setCategorie(Categorie.valueOf(rs.getString("categorie")));
+
             personne.setListeRouge(rs.getBoolean("liste_rouge"));
         }
 
@@ -70,7 +72,9 @@ public class PersonneDAOImpl implements PersonneDAO {
             personne.setAdresseCourriel(rs.getString("adresse_courriel"));
             personne.setDomaineActivite(rs.getString("domaine_activite"));
             personne.setMotDePasse(rs.getString("mot_de_passe"));
-            personne.setCategorie(rs.getString("categorie"));
+            personne.setCategorie(Categorie.valueOf(rs.getString("categorie")));
+
+
             personne.setListeRouge(rs.getBoolean("liste_rouge"));
 
             personnes.add(personne);
@@ -84,7 +88,7 @@ public class PersonneDAOImpl implements PersonneDAO {
 
         return personnes;
     }
-
+//Categorie.valueOf(rs.getString("categorie")
     @Override
     public int ajouterMembre(Personne personne) throws SQLException {
 
@@ -104,7 +108,8 @@ public class PersonneDAOImpl implements PersonneDAO {
         preparedStatement.setString(5, personne.getAdresseCourriel());
         preparedStatement.setString(6, personne.getDomaineActivite());
         preparedStatement.setString(7, personne.getMotDePasse());
-        preparedStatement.setString(8, personne.getCategorie());
+
+        preparedStatement.setString(8,  personne.getCategorie().name());
         preparedStatement.setBoolean(9, personne.isListeRouge());
 
         rowsAffected = preparedStatement.executeUpdate();
@@ -138,7 +143,7 @@ public class PersonneDAOImpl implements PersonneDAO {
         preparedStatement.setString(5, personne.getAdresseCourriel());
         preparedStatement.setString(6, personne.getDomaineActivite());
         preparedStatement.setString(7, personne.getMotDePasse()); /////
-        preparedStatement.setString(8, personne.getCategorie());
+        preparedStatement.setString(8,  personne.getCategorie().name());
         preparedStatement.setBoolean(9, personne.isListeRouge());
         preparedStatement.setInt(10, personne.getId());
 
@@ -198,15 +203,16 @@ public class PersonneDAOImpl implements PersonneDAO {
             personne.setAdresseCourriel(rs.getString("adresse_courriel"));
             personne.setDomaineActivite(rs.getString("domaine_activite"));
             personne.setMotDePasse(rs.getString("mot_de_passe"));
-            personne.setCategorie(rs.getString("categorie"));
+            preparedStatement.setString(8,  personne.getCategorie().name());
+
             personne.setListeRouge(rs.getBoolean("liste_rouge"));
         }
 
         return personne;
     }
 
-  /*cela signal en erreur   @Override
-     public List<Personne> getMembresParCategorie(String categorie) throws SQLException {
+    @Override
+    public List<Personne> getMembresParCategorie(Categorie categorie) throws SQLException {
         List<Personne> personnes = new ArrayList<>();
 
         String sql = "SELECT id, nom, prenom, matricule, telephone, adresse_courriel, " +
@@ -214,9 +220,9 @@ public class PersonneDAOImpl implements PersonneDAO {
                 "FROM personne WHERE categorie = ? ORDER BY nom, prenom";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, categorie);
+            ps.setString(1, categorie.name());
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -229,17 +235,20 @@ public class PersonneDAOImpl implements PersonneDAO {
                     p.setAdresseCourriel(rs.getString("adresse_courriel"));
                     p.setDomaineActivite(rs.getString("domaine_activite"));
                     p.setMotDePasse(rs.getString("mot_de_passe"));
-                    p.setCategorie(rs.getString("categorie"));
+                    p.setCategorie(Categorie.valueOf(rs.getString("categorie")));
+
                     p.setListeRouge(rs.getBoolean("liste_rouge"));
 
                     personnes.add(p);
+                    System.out.println(
+                            p.getNom() + " " + p.getPrenom() + " membre(s) trouvé(s) dans la catégorie : " + categorie);
+
                 }
             }
         }
 
-        System.out.println(personnes.size() + " membre(s) trouvé(s) dans la catégorie : " + categorie);
         return personnes;
-    } */
+    }
 
     @Override
     public List<Personne> getProfesseursParDomaine(int domaine) throws SQLException {

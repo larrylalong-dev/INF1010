@@ -1,5 +1,7 @@
 package Entite;
 
+import CategorieEnum.Categorie;
+
 public class Personne {
     private int id;
     private String nom;
@@ -9,7 +11,7 @@ public class Personne {
     private String adresseCourriel; 
     private String domaineActivite;
     private String motDePasse;
-    private String categorie; // je remplacerai peut etre par ENUM ON verra bien
+    private Categorie categorie; 
     private boolean listeRouge;
 
 
@@ -17,7 +19,7 @@ public class Personne {
     public Personne() {
     }
     public Personne(int id, String nom, String prenom, String matricule, String telephone,String adresseCourriel,
-            String domaineActivite, String motDePasse, String categorie, boolean listeRouge) {
+            String domaineActivite, String motDePasse, Categorie categorie, boolean listeRouge) {
 
         this.id = id;
         this.nom = nom;
@@ -34,7 +36,7 @@ public class Personne {
        // Constructeur sans ID (pour les insertions)
     public Personne(String nom, String prenom, String matricule, String telephone,
                     String adresseCourriel, String domaineActivite, String motDePasse, 
-                    String categorie, boolean listeRouge) {
+                    Categorie categorie, boolean listeRouge) {
         this.nom = nom;
         this.prenom = prenom;
         this.matricule = matricule;
@@ -111,11 +113,11 @@ public class Personne {
         this.motDePasse = motDePasse;
     }
 
-    public String getCategorie() {
+    public Categorie getCategorie() {
         return this.categorie;
     }
 
-    public void setCategorie(String categorie) {
+    public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
     }
 

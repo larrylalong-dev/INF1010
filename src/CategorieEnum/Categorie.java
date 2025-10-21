@@ -1,8 +1,8 @@
 package CategorieEnum;
 
 public enum Categorie {
-    PROFESSEUR,
-    ÉTUDIANT,
-    ETUDIANT_AUXILIAIRE,
-    ADMINISTRATEUR;
+    professeur,
+    etudiant,
+    auxiliaire,
+    administrateur
 }
