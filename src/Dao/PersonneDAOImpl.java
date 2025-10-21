@@ -205,7 +205,7 @@ public class PersonneDAOImpl implements PersonneDAO {
         return personne;
     }
 
-    @Override
+  /*cela signal en erreur   @Override
      public List<Personne> getMembresParCategorie(String categorie) throws SQLException {
         List<Personne> personnes = new ArrayList<>();
 
@@ -236,7 +236,7 @@ public class PersonneDAOImpl implements PersonneDAO {
                 }
             }
         }
-
+ */
         System.out.println(personnes.size() + " membre(s) trouvé(s) dans la catégorie : " + categorie);
         return personnes;
     }
