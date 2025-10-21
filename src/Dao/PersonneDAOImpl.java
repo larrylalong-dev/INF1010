@@ -151,7 +151,6 @@ public class PersonneDAOImpl implements PersonneDAO {
 
         DatabaseConnection.closePreparedStatement(preparedStatement);
         DatabaseConnection.closeConnection(connection);
-
         return rowsAffected;
     }
 
